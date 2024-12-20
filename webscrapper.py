@@ -30,8 +30,15 @@ junk = []
 
 for i in gfg:
     if i.text.startswith('Prompt:'):
-        prompts.append(i.text)  
-    else:
-        junk.append(i)
+        prompts.append(i.text)
 
-print(prompts)
+ind_prompts = []
+for i in prompts:
+   first_space = i.find(' ')
+   first_comma = i.find(",")
+   if first_space != -1 and first_comma != -1:
+        ind_prompts.append(i[first_space + 1:first_comma].strip())
+        
+print(ind_prompts)
+
+
