@@ -42,7 +42,17 @@ for prompt in prompts:
     
     ind_prompts.append(clean_prompt)
 
-print(ind_prompts)
+#print(ind_prompts)
+
+no_dupes = list(set(ind_prompts))
+#print(no_dupes)
+
+# Maintaining order
+no_dupes_ordered = []
+for item in ind_prompts:
+    if item not in no_dupes_ordered:
+        no_dupes_ordered.append(item)
+print("This is the no duplicates this: " + str(no_dupes_ordered))
 
 
 
