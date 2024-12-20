@@ -26,19 +26,23 @@ text = 'Prompt: '
 gfg = soup.find_all(lambda tag: tag.name == "p" and text in tag.text)
 
 prompts = []
-junk = []
-
 for i in gfg:
     if i.text.startswith('Prompt:'):
         prompts.append(i.text)
 
 ind_prompts = []
-for i in prompts:
-   first_space = i.find(' ')
-   first_comma = i.find(",")
-   if first_space != -1 and first_comma != -1:
-        ind_prompts.append(i[first_space + 1:first_comma].strip())
-        
+
+for prompt in prompts:
+    # Remove "Prompt: "
+    clean_prompt = prompt.replace("Prompt: ", "").strip()
+    
+    # Remove word count info (anything in parentheses at the end)
+    if '(' in clean_prompt and clean_prompt.endswith(')'):
+        clean_prompt = clean_prompt[:clean_prompt.rfind('(')].strip()
+    
+    ind_prompts.append(clean_prompt)
+
 print(ind_prompts)
+
 
 
