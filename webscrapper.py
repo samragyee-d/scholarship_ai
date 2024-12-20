@@ -1,70 +1,12 @@
-#Getting HTML data from the college essay guy website
+#Webscraper for college essays and prompts
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from urllib.request import urlopen
 import requests
-  
-driver = webdriver.Chrome(executable_path='"C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Google Chrome.lnk"')
 
-url = "https://www.collegeessayguy.com/blog/scholarship-essay-examples#A"
-driver.get(url)
+scrape_URL = "https://www.collegeessayguy.com/blog/scholarship-essay-examples#A"
 
-driver.implicitly_wait(10)  
+HEADERS = ({'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+'Accept-Language':'en-US,en;q=0.5'})
 
-html = driver.page_source
-soup = BeautifulSoup(html, 'html.parser')
-print(soup.prettify())
+webpage = requests.get(scrape_URL, headers=HEADERS)
 
-
-
-
-# function to extract html document from given url 
-def getHTMLdocument(url): 
-      
-    # request for HTML document of given url 
-    response = requests.get(url) 
-      
-    # response will be provided in JSON format 
-    return response.text 
-  
-scrape_url = "https://www.collegeessayguy.com/blog/scholarship-essay-examples"
-html_document = getHTMLdocument(scrape_url) 
-
-#Works
-
-#Trying to get essays 
-soup = BeautifulSoup(urlopen(scrape_url))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+soup = BeautifulSoup(webpage.content, 'html.parser')
