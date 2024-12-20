@@ -24,5 +24,14 @@ text = 'Prompt: '
  
 # Search by text with the help of lambda function
 gfg = soup.find_all(lambda tag: tag.name == "p" and text in tag.text)
- 
-print(gfg)
+
+prompts = []
+junk = []
+
+for i in gfg:
+    if i.text.startswith('Prompt:'):
+        prompts.append(i.text)  
+    else:
+        junk.append(i)
+
+print(prompts)
