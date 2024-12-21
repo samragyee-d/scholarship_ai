@@ -52,7 +52,17 @@ no_dupes_ordered = []
 for item in ind_prompts:
     if item not in no_dupes_ordered:
         no_dupes_ordered.append(item)
-print("This is the no duplicates this: " + str(no_dupes_ordered))
+#print("This is the no duplicates this: " + str(no_dupes_ordered))
+
+
+essays = soup.find_all('blockquote')
+
+for index, (prompt, essay) in enumerate(zip(prompts, essays)):
+    print(f"Essay {index}:")
+    print(f"Prompt: {prompt}\n")
+    print(essay.get_text("\n", strip=True))  # Get the essay text and clean it up
+    print("\n" + "-"*50 + "\n")  # Separator between essays
+print(essay)
 
 
 
