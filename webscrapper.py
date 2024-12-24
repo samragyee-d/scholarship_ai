@@ -2,7 +2,6 @@
 # Importing libraries
 from bs4 import BeautifulSoup
 import requests
-import re
 
 # Obtained URL and defined the headers
 scrape_URL = "https://www.collegeessayguy.com/blog/scholarship-essay-examples#A"
@@ -19,27 +18,34 @@ webpage = requests.get(scrape_URL, headers=HEADERS)
 # This extracts the HTML code from the information stored in the webpage variable.
 soup = BeautifulSoup(webpage.content, 'html.parser')
 
-# Find all blockquote elements (essays) and pair them with their preceding "Prompt:" text
-essay_sections = soup.find_all('blockquote')
+# Extract all elements matching prompts or essays
+content = soup.find_all(['p', 'blockquote'])
 
-for index, essay in enumerate(essay_sections, start=1):
-    # Find the closest preceding paragraph containing the prompt
-    prompt_paragraph = essay.find_previous('p', text=re.compile(r'^Prompt:'))
-    
-    if prompt_paragraph:
+# Initialize variables for tracking
+essays = []
+current_prompt = None
+
+# Iterate through the content in document order
+for element in content:
+    if element.name == 'p' and element.text.startswith("Prompt:"):
         # Extract and clean the prompt
-        prompt_text = prompt_paragraph.text.replace("Prompt: ", "").strip()
+        prompt_text = element.text.replace("Prompt: ", "").strip()
         if '(' in prompt_text and prompt_text.endswith(')'):
             prompt_text = prompt_text[:prompt_text.rfind('(')].strip()
-    else:
-        # Handle cases where no prompt is found
-        prompt_text = "No prompt found"
+        current_prompt = prompt_text
+    elif element.name == 'blockquote':
+        # Only add the essay if a prompt exists
+        if current_prompt:
+            essay_text = element.get_text("\n", strip=True)
+            essays.append((current_prompt, essay_text))
+            current_prompt = None  # Reset after pairing
+        else:
+            # Skip essays without prompts
+            continue
 
-    # Extract and clean the essay text
-    essay_text = essay.get_text("\n", strip=True)
-
-    # Print the results
+# Print results
+for index, (prompt, essay) in enumerate(essays, start=1):
     print(f"Essay {index}:")
-    print(f"Prompt: {prompt_text}\n")
-    print(essay_text)
+    print(f"Prompt: {prompt}\n")
+    print(essay)
     print("\n" + "-" * 50 + "\n")
