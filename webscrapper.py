@@ -23,7 +23,7 @@ content = soup.find_all(['p', 'blockquote'])
 
 # Initialize variables for tracking
 essays = []
-current_prompt = None
+current_prompt = None 
 
 # Iterate through the content in document order
 for element in content:
