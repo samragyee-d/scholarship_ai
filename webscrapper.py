@@ -23,7 +23,7 @@ content = soup.find_all(['p', 'blockquote'])
 
 # Initialize variables for tracking
 essays = []
-current_prompt = None 
+current_prompt = None
 
 # Iterate through the content in document order
 for element in content:
@@ -36,12 +36,10 @@ for element in content:
     elif element.name == 'blockquote':
         # Only add the essay if a prompt exists
         if current_prompt:
-            essay_text = element.get_text("\n", strip=True)
+            essay_text = element.get_text(" ", strip=True)  # Use a space to join lines consistently
+            essay_text = ' '.join(essay_text.split())  # Normalize whitespace
             essays.append((current_prompt, essay_text))
             current_prompt = None  # Reset after pairing
-        else:
-            # Skip essays without prompts
-            continue
 
 # Print results
 for index, (prompt, essay) in enumerate(essays, start=1):
