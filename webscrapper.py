@@ -2,6 +2,7 @@
 # Importing libraries
 from bs4 import BeautifulSoup
 import requests
+import csv
 
 # Obtained URL and defined the headers
 scrape_URL = "https://www.collegeessayguy.com/blog/scholarship-essay-examples#A"
@@ -42,8 +43,22 @@ for element in content:
             current_prompt = None  # Reset after pairing
 
 # Print results
+'''
 for index, (prompt, essay) in enumerate(essays, start=1):
     print(f"Essay {index}:")
     print(f"Prompt: {prompt}\n")
     print(essay)
     print("\n" + "-" * 50 + "\n")
+'''
+
+filename = "successfulEssays.csv"
+
+with open(filename, mode='w', newline='', encoding='utf-8') as file:
+    writer = csv.writer(file)
+    # Write header row
+    writer.writerow(["Prompt", "Essay"])
+    # Write each essay
+    for prompt, essay in essays:
+        writer.writerow([prompt, essay])
+
+print(f"Data exported to {filename}")
