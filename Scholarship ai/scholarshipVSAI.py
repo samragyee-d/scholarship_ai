@@ -3,7 +3,7 @@ from transformers import AutoTokenizer
 
 file = r"Scholarship ai\ielts_writing_dataset.csv"
 
-df = pd.read_csv(file) 
+df = pd.read_csv(file)
 df = df.drop(['Examiner_Commen', 'Task_Response', 'Coherence_Cohesion', 'Range_Accuracy', 'Lexical_Resource'], axis=1)
 
 #Standardizing the text 
