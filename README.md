@@ -53,3 +53,4 @@ the platform that I was used to utilizing. However, I soon realized that using V
 3. I standarized the text by making everything lowercase. I now reconsidering that decision. 
 4. I split the csv into training and testing data using sckit-learn
 5. I was finally able to tokenize the questions and essays seperatly 
+6. Final note: I tokenized and encoded 
