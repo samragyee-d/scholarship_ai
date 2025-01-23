@@ -3,8 +3,8 @@ from datasets import load_dataset
 from transformers import AutoTokenizer
 
 # Use raw string for file paths to avoid issues with backslashes
-file_train = r"Scholarship ai\train_ielts_writing_dataset.csv"
-file_test = r"Scholarship ai\test_ielts_writing_dataset.csv"
+file_train = "train_ielts_writing_dataset.csv"
+file_test = "test_ielts_writing_dataset.csv"
 
 tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
 
@@ -30,5 +30,6 @@ tokenized_questions = dataset["train"]["input_ids_question"]
 tokenized_essays = dataset["train"]["input_ids_essay"]
 
 # Print first 5 tokenized questions and essays
-print("Tokenized Questions (First 5):", tokenized_questions[:5])
-print("Tokenized Essays (First 5):", tokenized_essays[:5])
+print("Tokenized Questions:", tokenized_questions)
+print("Tokenized Essays:", tokenized_essays)
+
